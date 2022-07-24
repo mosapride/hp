@@ -1,6 +1,6 @@
 ---
-title: 遅延してスクロール
-description: TwitterやFacebook、DiscrodなどにURLを貼ると画像つきリンクになるがAngularで実装するとなると限界がある。
+title: Angularで遅延してスクロール
+description: Angularで画面の描画後に特定位置まで自動でスクロールさせたい場合にどうしたら良いかを実装した。
 ---
 
 画面の描画後に特定位置まで自動でスクロールさせたい場合にどうしたら良いかを実装した。
