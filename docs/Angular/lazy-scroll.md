@@ -7,6 +7,11 @@ description: TwitterやFacebook、DiscrodなどにURLを貼ると画像つきリ
 
 実装した例はこれである。[https://yschedule.ement.dev/l/v_kurore/ksonArk](https://yschedule.ement.dev/l/v_kurore/ksonArk)
 
+<ClientOnly>
+  <CallInFeedAdsense />
+</ClientOnly>
+
+
 `ngAfterVewInit`でscrollを発火させればよいと思ってたが、ずれてしまう。その原因は
 
 * `ngFor`によるループ処理でデータ量が可変となる。
@@ -103,4 +108,8 @@ export class LoadedDirective {
 ## まとめ
 
 うまく動いているっぽいけど、もっと簡単な実装方法がありそうな気がする。
+
+<ClientOnly>
+  <CallInFeedAdsense />
+</ClientOnly>
 
