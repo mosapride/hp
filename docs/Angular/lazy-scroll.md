@@ -43,37 +43,9 @@ DOMが生成されていても、画像の読み込みには時間が掛かる�
 
 ## 実装
 
-Angularのimgには`load`が実装されていないので、独自に実装する。
+imgの`load`を利用する。
 
-参考にしたのはこれ[https://stackoverflow.com/questions/56812191/how-to-know-when-an-image-has-been-fully-loaded-in-angular](https://stackoverflow.com/questions/56812191/how-to-know-when-an-image-has-been-fully-loaded-in-angular)
-
-loaded.directive.tsを作成し、hogehoge.componentに適用する。
-
-### loaded.directive.ts
-
-```ts
-import { Directive, ElementRef, EventEmitter, HostListener, Output } from '@angular/core';
-
-@Directive({
-  selector: 'img[loaded]'
-})
-export class LoadedDirective {
-
-  @Output() loaded = new EventEmitter();
-
-  @HostListener('load')
-  onLoad() {
-    this.loaded.emit();
-  }
-
-  constructor(private elRef: ElementRef<HTMLImageElement>) {
-    if (this.elRef.nativeElement.complete) {
-      this.loaded.emit();
-    }
-  }
-}
-
-```
+(修正済み)：謝辞参考
 
 ### hoge.component.ts
 
@@ -97,7 +69,7 @@ export class LoadedDirective {
 </div>
 
 <div *ngFor="let i of items: let last = last">
-    <img src="i.img" (loaded)="last ? goScroll(scroller): true"><!-- 画面ロードしたら発火する -->
+    <img src="i.img" (load)="last ? goScroll(scroller): true"><!-- 画面ロードしたら発火する -->
 </div>
 
 <div #scroller></div><!-- スクロールさせたい場所 -->
@@ -109,7 +81,27 @@ export class LoadedDirective {
 
 ## まとめ
 
-うまく動いているっぽいけど、もっと簡単な実装方法がありそうな気がする。
+(修正、追加)：謝辞参考
+
+この処理でズレが生じないかというと確実ではない。
+
+例えば、ループ内の画像サイズにばらつきがある場合に、lastの画像が先にロードされる場合もある。
+
+```ts
+item = [
+  '10Mの画像' , '10Mの画像', '10Mの画像', '10Mの画像' , '10byteの画像'
+]
+```
+
+画像によるズレを回避するには、全部の画像をチェックする方が確実。ブラウザの描画が完成されているためズレはうまれないはずだ！
+
+## 追記：謝辞
+
+ありがとおおおお。
+
+* https://twitter.com/laco2net/status/1551016956945641474
+* https://twitter.com/joniburn/status/1551018385441718272
+
 
 <ClientOnly>
   <CallInFeedAdsense />
