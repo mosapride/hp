@@ -3,6 +3,8 @@ title: Angularで遅延してスクロール
 description: Angularで画面の描画後に特定位置まで自動でスクロールさせたい場合にどうしたら良いかを実装した。
 ---
 
+追加、変更。下記の謝辞参考
+
 # Angularで遅延してスクロール
 
 画面の描画後に特定位置まで自動でスクロールさせたい場合にどうしたら良いかを実装した。
@@ -99,8 +101,8 @@ item = [
 
 ありがとおおおお。
 
-* https://twitter.com/laco2net/status/1551016956945641474
-* https://twitter.com/joniburn/status/1551018385441718272
+* [https://twitter.com/laco2net/status/1551016956945641474](https://twitter.com/laco2net/status/1551016956945641474)
+* [https://twitter.com/joniburn/status/1551018385441718272](https://twitter.com/joniburn/status/1551018385441718272)
 
 
 <ClientOnly>
