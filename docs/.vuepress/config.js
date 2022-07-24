@@ -159,7 +159,8 @@ module.exports = {
             'datePipe',
             'outerScript',
             'svgIconDrective',
-            'ogp'
+            'ogp',
+            'lazy-scroll'
           ],
         },
       ],
