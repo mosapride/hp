@@ -181,7 +181,8 @@ module.exports = {
         sidebarDepth: 0,
         children: [
           "",
-          "endpoint"
+          "endpoint",
+          "method"
         ],
       },],
       "/htmlcss/": [
