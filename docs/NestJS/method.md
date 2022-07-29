@@ -100,6 +100,14 @@ twitterのアカウント名といえば一般的に@から始まる英数字と
 
 また、メールアドレスも変わることを前提に考えておくべきであり、主キーとするのは危険。
 
+### Microsftのベストプラクティスと違うではないか
+
+その通り、Microsoftが公開している[Web API 設計のベスト プラクティス - Azure Architecture Center](https://docs.microsoft.com/ja-jp/azure/architecture/best-practices/api-design)とは異なる部分がある。
+
+[Youtube DATA API](https://developers.google.com/youtube/v3/getting-started)、[Twitter API](https://developer.twitter.com/ja/docs)なども見ながら考察した結果、私の中では上記のような結論となった。これがベストだとは言い切れない。
+
+**賢者は歴史に学び愚者は経験に学ぶ**とあるが、歴史が短すぎる、かつ、様々なシステム要求があるため経験による感想も人それぞれだろうと容認して欲しい。
+
 ## 参考資料
 
 - [MDN Web Docs](https://developer.mozilla.org/ja/docs/Web)
