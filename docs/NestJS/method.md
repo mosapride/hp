@@ -11,6 +11,10 @@ SQLの命令言語？は4つ（SELECT,UPDATE,INSERT,DELETE）となる。※TRUN
 
 HTTPプロトコルとDataBaseはアルゴリズム以前にサービス自体が別物なので、HTTPメソッドの役割とSQLの命令言語の役割はイコールではない。そのため**すり合わせ**が必要となる。つまりどこかしら矛盾が生じる。仕様やコーディング規約とは違うがプロジェクト内で規約化する必要がある。
 
+<ClientOnly>
+  <CallInFeedAdsense />
+</ClientOnly>
+
 **HTTPメソッドとSQL命令をすり合わせた表**
 
 |HTTPメソッド|SQL命令|役割|
@@ -107,6 +111,10 @@ twitterのアカウント名といえば一般的に@から始まる英数字と
 [Youtube DATA API](https://developers.google.com/youtube/v3/getting-started)、[Twitter API](https://developer.twitter.com/ja/docs)なども見ながら考察した結果、私の中では上記のような結論となった。これがベストだとは言い切れない。
 
 **賢者は歴史に学び愚者は経験に学ぶ**とあるが、歴史が短すぎる、かつ、様々なシステム要求があるため経験による感想も人それぞれだろうと容認して欲しい。
+
+<ClientOnly>
+  <CallInFeedAdsense />
+</ClientOnly>
 
 ## 参考資料
 
