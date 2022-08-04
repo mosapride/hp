@@ -1,13 +1,11 @@
 ---
 title: RESTful APIのエンドポイントを考える
-description: RESTful APIはURLをめがけてリクエストが飛んでくるが、どのようなエンドポイントにするかはDBのTable、リレーションを含めてエンドポイントを決める。
+description: RESTful APIはURLをめがけてリクエストが飛んでくるが、どのようなエンドポイントにするかはDBのTable、リレーション、用途から決める必要がある。
 ---
 
 # RESTful APIのエンドポイントを考える
 
-**※あくまで個人の意見。**
-
-RESTful APIはURLをめがけてリクエストが飛んでくるが、どのようなエンドポイントにするかはDBのTable、リレーションを含めてエンドポイントを決める。
+RESTful APIはURLをめがけてリクエストが飛んでくるが、どのようなエンドポイントにするかはDBのTable、リレーション、用途から決める必要がある。
 
 <ClientOnly>
   <CallInFeedAdsense />
@@ -48,9 +46,14 @@ REST APIのルールにそって考えると、twitterとvideoがルートとな
 |/twitter|twitter情報に紐づいた情報(list配下、pin配下含む)を管理する|
 |/video|video情報に紐づいた情報を管理する|
 
-例えば`GET http://hogehoge/twitter`の場合は、twitterユーザー情報(紐づくデータ含む)をすべて返す。となる。一人のtwitterユーザー情報(紐づくデータ含む)を返す場合は`GET http://hogehoge/twitter/ユーザーID`となる。しかし、この場合はデータ量が多すぎる。役割別、細分化するした方が良いはず。
+例えば`GET /twitter`の場合は、twitterユーザー情報(紐づくデータ含む)をすべて返す。となる。一人のtwitterユーザー情報(紐づくデータ含む)を返す場合は`GET /twitter/:userID`となる。
 
-この場合は、list、pinを追加し、twitterエンドポイントの役割を減らし、減らした役割を委譲する。
+特定のtwitterユーザーが持つlist情報を取得する場合は`GET twitter/:userID/list`となり。<br>
+特定のtwitterユーザーが持つpin情報を取得する場合は`GET twitter/:userID/pin`となる。<br>
+
+この場合はユーザーIDは必ず`:userID`を指定する縛りが出てくる。例えば**全twitterユーザー**のリスト名一覧や、ある文字を含む**全twitterユーザー**リスト一覧を出すなどの仕様には対応できない。
+
+twitterユーザーと疎結合となるデータが必要な仕様の場合は、エンドポイントのルートを増やす必要がある。
 
 |エンドポイント|用途|
 |---|---|
@@ -59,9 +62,29 @@ REST APIのルールにそって考えると、twitterとvideoがルートとな
 |/pin|twitter情報-pin情報に紐づいた情報を管理する|
 |/video|video情報に紐づいた情報を管理する|
 
-Databaseのtableリレーションはリレーション条に、つまりツリーになる。ルートをエンドポイントにすると肥大化しすぎてしまう。枝のどこをルートとし直すかはケースバイケース。
+`GET /list`と指定すればすべてのtwitterユーザーのリストを取得できる。特定の条件でリストを取得したいならばURLクエリパラメータを追加すればよい。つまりは。
 
-しかし、最適なtable設計ができていれば、ベストではないにしろ、ベターなエンドポイントを決める事ができる。**その最適なtable設計が一番難しいが、その問題を無視すればすべてが解決**する。
+**`GET /list`が対応するクエリパラメータ**
+
+|key|required|Type|意味|
+|---|---|---|---|
+|userID|☓|Array\<string\>|list.twitterIDにuserIDを含むリストを返す。|
+|keyword|☓|string|list.nameにキーワードを含むリストを返す。|
+
+URLパラメータには配列の概念がないため、特定の文字列を区切り文字にする必要がある。
+
+userIDが、user001とuser002のリスト一覧を取得したい場合は<br>
+`GET /list?userID=user001,user002`となる。
+
+userIDが、user001とuser002 AND 「sample」キーワードを含むリストを返す場合は<br>
+`GET /list?userID=user001,user002&keyword=sample`となる。
+
+
+トップレベルのエンドポイントはデータベースのリレーション関係から、どのようにデータを取得したいかを考慮して命名していけば良い。
+
+最適なtable設計ができていれば、ベストではないにしろ、ベターなエンドポイントを決める事ができる。**その最適なtable設計が一番難しいが、その問題を無視すればすべてが解決**する。
+
+[API reference index | Docs | Twitter Developer Platform](https://developer.twitter.com/en/docs/api-reference-index)
 
 ### 補足：YSchedule（ゆうすけ）について
 

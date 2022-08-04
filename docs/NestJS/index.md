@@ -7,13 +7,11 @@ description: NestJSの技術的な情報を書く。あくまで個人の意見�
 
 NestJSの技術的な情報を書く。自身で２つプロジェクトをNestJSを使ってRESTful APIを実装した訳だが、使いまわしができそうなところ、実装が大変だったところの知見を残す。
 
-入門書ではない。
+なにか間違いや、他のより良い実装方法、ベストプラクティス的なものがあれば、[GitHubに公開](https://github.com/mosapride/learn-nestjs)しているのでissuesやpull request、[Twitter](https://twitter.com/v_kurore)などで教えてくれるとマダガスカル。
 
 RESTfulについてはMicrosoftのドキュメントがわかりやすい。
 
 * [Web API 設計のベスト プラクティス - Azure Architecture Center](https://docs.microsoft.com/ja-jp/azure/architecture/best-practices/api-design)
-
-あくまで個人の意見なのでもっと良い実装方法があればgithubで書いて欲しい。
 
 <ClientOnly>
   <CallInFeedAdsense />

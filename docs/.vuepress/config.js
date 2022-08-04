@@ -181,8 +181,9 @@ module.exports = {
         sidebarDepth: 0,
         children: [
           "",
+          "method",
           "endpoint",
-          "method"
+          "learn-nestjs",
         ],
       },],
       "/htmlcss/": [
