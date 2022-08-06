@@ -5,9 +5,13 @@ description: 学ぶにあたって文字だけじゃ理解が深まらない。�
 
 # Learn NestJSについて
 
-学ぶにあたって文字だけじゃ理解が深まらない。ので、学習用プロジェクトを[GitHub mosapride/learn-nestjs](https://github.com/mosapride/learn-nestjs)に公開している。MySQLのDockerファイルと、動く状態のNestJS学習用プロジェクト、勉強用のデータなどがメインとなる。Databaseがすでに手元にある場合は、`assets/learn-nestdb-dump.sql`を取り込めば良い。
+NestJS初学者が読むものではないことを記載しておく。[公式ドキュメント](https://docs.nestjs.com/)をある程度、知っている前提で記事を記載しているので、ユースケースのようなものになる。
 
-※他のプロジェクトと使用するポートのバッティングを防ぐため、デフォルトポートを変更している。また、docker-compose.ymlにて変更が可能。
+コードを記載しているだけでは理解が難しく、試行錯誤もできないので学習用プロジェクトを[GitHub mosapride/learn-nestjs](https://github.com/mosapride/learn-nestjs)に公開している。学習用プロジェクトといっても動く状態のNestJSプロジェクトと、本書で記載しているコードが載っているシンプルなもの。学習用とあってセキュリティなども甘いし、ベストプラクティスでもない。もっとよいコードがあれば教えて欲しい。
+
+MySQLのDockerファイルと、動く状態のNestJS学習用プロジェクト、勉強用のデータなどがメインとなる。Databaseがすでに手元にある場合は、`assets/learn-nestdb-dump.sql`を取り込めば良い。
+
+他のプロジェクトと使用するポートのバッティングを防ぐため、デフォルトポートを変更している。また、docker-compose.ymlにて変更が可能。
 
 ## 開発環境
 

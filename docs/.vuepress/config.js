@@ -174,18 +174,29 @@ module.exports = {
           ],
         },
       ],
-      "/NestJS/": [        {
-        title: "NestJS",
-        collapsable: false,
-        initialOpenGroupIndex: -1,
-        sidebarDepth: 0,
-        children: [
-          "",
-          "method",
-          "endpoint",
-          "learn-nestjs",
-        ],
-      },],
+      "/NestJS/": [
+        {
+          title: "NestJS",
+          collapsable: false,
+          initialOpenGroupIndex: -1,
+          sidebarDepth: 0,
+          children: [
+            "",
+            "method",
+            "endpoint",
+          ],
+        },
+        {
+          title: "Learn NestJS",
+          collapsable: false,
+          initialOpenGroupIndex: -1,
+          sidebarDepth: 0,
+          children: [
+            "learn-nestjs",
+            "learn-nestjs-controller",
+          ],
+        },
+      ],
       "/htmlcss/": [
         {
           title: "HTML&CSS",
