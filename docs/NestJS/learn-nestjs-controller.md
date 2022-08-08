@@ -11,7 +11,7 @@ Controllerは、リクエスト(要求)を受付、レスポンス(応答)を返
 
 リクエストに対する受け取る情報は`@Param()`、`@Query()`、`@Body()`さえ覚えておけばだいたい問題ない。
 
-## リクエストのデータ
+## リクエストのデータの復習
 
 リクエストのデータを見るには`curl`コマンドから確認できる。
 
@@ -63,9 +63,11 @@ Content-Length: 248
 
 ## メソッド別パラメータ
 
-[RESTful APIのメソッドを考える](http://localhost:9090/NestJS/method.html)の通り、GET、POST、PUT、DELETEの4種類のメソッドから表にする。
+メソッドは[RESTful APIのメソッドを考える](http://localhost:9090/NestJS/method.html)の通り、GET、POST、PUT、DELETEの4種類のメソッドから表にする。
 
-hostname,portに関してはすべて必須となる。headerは必要に応じて変わってくるため、あとに記述する。
+メソッドに対して与えられるパラメータは、endpoint、query、body、headerの4種類がメインとなる。header情報は後々説明する。
+
+※hostname,portに関してはすべて必須となる。
 
 * ○：必須
 * △：オプション
@@ -77,30 +79,26 @@ hostname,portに関してはすべて必須となる。headerは必要に応じ�
 |query|@Query|△|☓|△|△|
 |body|@Body|☓|○|○|△|
 
-上位以外にcookie情報による分岐もありうる。あとに記載する。
-
-### endpoint - @Param
+## endpoint - @Param
 
 ::: tip サンプルコードの場所
 * learn-nestjs/rest-client/user.rest
 * learn-nestjs/src/endpoint/user.controller.ts
 :::
 
-endpointはパスのようなもので、完全固定と半固定がある。
+endpointはパスのようなもので、固定にも半固定にもできる。
 
-完全固定の例はユーザーをすべて取得するようなAPI。
+固定の例はユーザーをすべて取得するようなAPI。
 
 `GET http://localhost:3000/user`
 
-半固定の例は特定のユーザー情報を取得する場合など。
+半固定の例は特定のユーザー情報を取得する場合などで、`:id`はユーザーIDとなる。
 
-`GET http://localhost:3000/user/1`
-
-`user id`(Sampleでは1)を指定することによって、user idが1のユーザー情報を取得する。
+`GET http://localhost:3000/user/:id`
 
 NestJSで可変部のendpointを取得するには`@Param`デコレーターを使用する。
 
-全体のParam情報を取得する場合は`@Param()`を指定するが、可読性が良くないのでおすすめしない。
+全体のParam情報を取得する場合は`@Param()`を指定するが、any型になり**可読性が良くないのでおすすめしない**。
 
 ```ts
 @Get(':id')
@@ -110,21 +108,21 @@ findOne(@Param() params): string {
 }
 ```
 
-`@Param(':キー')`を指定することによって、特定の場所を型情報を保持した状態で取得できる。
+`@Param(':キー')`は引数にキーを与えることにより、特定の場所を型情報を保持した状態で取得できる。
 
 ```ts
 @Get(':id')
-findOne(@Param('id') id): string { // キーを指定する
+findOne(@Param('id') id: number): string { // キーを指定する、idはnumber型と指定できる
   console.log(id);
   return `This action returns a #${id} cat`;
 }
 ```
 
-`@Param()`デコレータは複数指定できる。
+`@Param(':id')`デコレータは複数指定できる。
 
 ```ts
 @Get(':id1/:id2')
-findOne(@Param('id1') id1,@Param('id2') id2): string { // キーを複数指定する
+findOne(@Param('id1') id1: number,@Param('id2') id2: string): string { // キーを複数指定する
   console.log(id);
   return `This action returns a #${id1} - ${id2} cat`;
 }
@@ -134,21 +132,24 @@ findOne(@Param('id1') id1,@Param('id2') id2): string { // キーを複数指定�
 
 ```ts
 @Get('example/:id1/hogehoge/:id2') // こんなの
-findOne(@Param('id1') id1,@Param('id2') id2): string {
+findOne(@Param('id1') id1: number,@Param('id2') id2: string): string {
   console.log(id);
   return `This action returns a #${id1} - ${id2} cat`;
 }
 ```
 
-### query
+## query - @Query
 
 ::: tip サンプルコードの場所
 * learn-nestjs/rest-client/user.rest
 * learn-nestjs/src/endpoint/user.controller.ts
 :::
 
-queryの役割は、endpointのデータに対してスコープを決めること。（と考えたほうが楽）
+queryの役割は、endpointに対して追加パラメータを与えるイメージで考えると色々と作りやすい。
 
-スコープとは扱える範囲を示すが、queryのスコープとは、レスポンス情報に対して、付加情報を指示したり、検索情報を指定したりなどにあたる。
+追加パラメータの役割の例
+
+|param|意味|
+|part||
 
 

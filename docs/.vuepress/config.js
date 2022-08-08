@@ -187,7 +187,7 @@ module.exports = {
           ],
         },
         {
-          title: "Learn NestJS",
+          title: "Learn NestJS（作成中）",
           collapsable: false,
           initialOpenGroupIndex: -1,
           sidebarDepth: 0,
@@ -219,6 +219,7 @@ module.exports = {
             "",
             "fledglingEngineer",
             "server",
+            "server2",
             "oauth",
             "randomPassword",
           ],
