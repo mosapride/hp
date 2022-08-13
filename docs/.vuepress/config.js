@@ -180,11 +180,7 @@ module.exports = {
           collapsable: false,
           initialOpenGroupIndex: -1,
           sidebarDepth: 0,
-          children: [
-            "",
-            "method",
-            "endpoint",
-          ],
+          children: ["", "method", "endpoint"],
         },
         {
           title: "Learn NestJS（作成中）",
@@ -194,6 +190,7 @@ module.exports = {
           children: [
             "learn-nestjs",
             "learn-nestjs-controller",
+            "learn-nestjs-controllerr-param",
           ],
         },
       ],

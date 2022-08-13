@@ -82,6 +82,14 @@ $ docker-compose up -d
 $ cd learn-nestjs/assets
 $ docker exec learn-nestdb sh -c 'exec mysql nestdb -uroot -pexample' < learn-nestdb-dump.sql
 ```
+### 実行
+
+```bash
+$ cd learn-nestjs
+$ npm run start:dev
+```
+
+ブラウザで<http://localhost:3000/>にアクセスすると、404エラーが表示されているはず。
 
 ## dockerコンテナについて
 
