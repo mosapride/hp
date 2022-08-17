@@ -191,6 +191,7 @@ module.exports = {
             "learn-nestjs",
             "learn-nestjs-controller",
             "learn-nestjs-controllerr-param",
+            "learn-nestjs-controllerr-query",
           ],
         },
       ],
