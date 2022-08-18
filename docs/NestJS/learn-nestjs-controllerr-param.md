@@ -30,7 +30,7 @@ description: Paramのベストプラクティスと思われるもの。@Param()
 * `@Param`は必ず値が入ってくるため`?`などの省略可能はしてはいけない
 
 ::: tip code
-learn-nestjs/src/endpoint/sample-request.ts
+<https://github.com/mosapride/learn-nestjs/blob/main/src/endpoint/sample-request-param.controller.ts>
 :::
 
 ## 以下は補足になる
