@@ -165,6 +165,38 @@ async function bootstrap() {
   logger.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();
+```
+
+nest-cli.jsonを下記のように修正する。
+
+@see <https://docs.nestjs.com/openapi/cli-plugin>
+
+```json
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "@nestjs/swagger",
+        "options": {
+          "dtoFileNameSuffix": [
+            ".dto.ts",
+            ".entity.ts"
+          ],
+          "controllerFileNameSuffix": [
+            ".controller.ts"
+          ],
+          "classValidatorShim": true,
+          "dtoKeyOfComment": "description",
+          "controllerKeyOfComment": "description",
+          "introspectComments": true
+        }
+      }
+    ]
+  }
+}
 
 ```
 
@@ -196,11 +228,24 @@ class-validationは上記でも記載したが`@Body`に対するクラスのプ
 
 公式：<https://github.com/typestack/class-validator#validation-decorators>
 
-### 注意点
+### nest-cli.jsonを編集した理由
 
-Swaggerとclass-validatorはある程度連携ができるため、簡易なドキュメントを求めるなら苦労はしないが実用的なレベルではない。**残念なことに同じような記載を手動で記述しないといけない**のが現状。
+前提として、OpenAPI(Swagger)とclass-validatorはまったく別のプラグインである。
 
-ReqUserクラスに下記のようなSwaggerと、class-validatorをつけると下記のようになる。
+ドキュメントと、その検証コードを同じにするには、私が知っている範囲で、２種類ある。
+
+1. ドキュメント(OpenAPI)からコードを生成する方法
+    * (例)openapi-generator-cliからyamlファイルを読み込み、TypeScriptファイルを出力する
+1. コードからドキュメントを生成する方法
+    * (例)TypeScriptファイルにSwagger+class-validatorのデコレーターを記載し、OpenAPIのyamlファイルを出力する
+
+nest-cli.jsonを編集し、class-validatorデコレーターの記載を、OpenAPI(Swagger)のデコレーターとして認識させ**連携させる**ことができる。
+
+#### 未連携の場合
+
+nest-cli.jsonが初期状態の場合、Swaggerと、class-validatorのデコレーターを記載しないと正しいドキュメントと、検証を行うことができない。
+
+**連携なしの場合のコード**
 
 * part
   * 省略不可
@@ -230,7 +275,7 @@ class ReqUser {
   @ApiProperty({ example: 'タナカ', required: false, maxLength: 10 })
   @IsOptional()
   @MaxLength(10)
-  searchKana: string;
+  searchKana?: string;
   
   @ApiPropertyOptional({ minimum: 1, maximum: 100, default: 11, example: 10, required: false })
   @IsOptional()
@@ -242,28 +287,38 @@ class ReqUser {
 }
 ```
 
-Swaggerと、class-validatorは**別のライブラリ**なので同じ定義をしないといけない。せいぜい`name`が省略できるぐらい。
+@ApiPropertyの記載と、class-validatorのデコレーターに同じ定義がされているのが分かる。@ApiPropertyは実行コードとしては意味をなさないため、構文エラーにさえならなければコンパイルは通るし、実運用しても問題ないが**ドキュメントと実処理**に矛盾が生じる。
 
-どうにかならないものか。
+#### 連携の場合
 
-### 記述が面倒くせー
+nestjs-cli.jsonを編集し、Swaggerとclass-validatorを連携させれば@ApiPropertyの記述が一気に減る。
 
-Swaggerデコレーター定義はしなくても処理的にはなにも問題がない。API仕様書を大雑把に出力するには`@ApiProperty()`のみ定義すればよい。詳細に記載するにはパラメーターが必須となり、記述方法も複雑になる。そこで３つ提案がある。
+```ts
+enum EPart {
+  name = 'name',
+  kana = 'kana',
+  kanaAsc = 'kanaAsc',
+}
 
-1. Swaggerを使用しない
-1. @ApiProperty()のみ定義する
-1. @ApiProperty()のパラメーターを含め詳細に記載する
+class ReqUser {
+  @ApiProperty()
+  @IsEnum(EPart, { each: true })
+  part: EPart[];
 
-#### Swaggerを使用しない
+  @ApiProperty({ example: 'タナカ' })
+  @IsOptional()
+  @MaxLength(10)
+  searchKana?: string;
+  
+  @ApiPropertyOptional()
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Max(100)
+  @Min(1)
+  maxResults: number = 11;
+}
+```
 
-否定できない。実際の作業では仕様書自体が存在しないプロジェクトもあるから。コードが仕様書です。
+@ApiPropertyには補足情報(exampleなど)のみを記載すればよい。不要ならば@ApiPropertyを定義するだけでよい。これでドキュメントとコードの相違がなくなるため、必ずnestjs-cli.jsonを編集し、連携させておくべき。
 
-#### @ApiProperty()のみ定義する
-
-エンドポイントの一覧と、簡易的なドキュメントを生成できる。パラメータの詳細が無いため、調べ物の時間が出てくる。
-
-#### @ApiProperty()のパラメーターを含め詳細に記載する
-
-理想形だが、Swaggerとclass-validatorの記述と完全に一致しないと、仕様書と実装が異なる現象が発生する。記述方法は癖があるが、パターン化すればコピペが有効になるかもしれない。
-
-上記でも記載したが、Swaggerはリクエストクライアントを用意してくれたり、仕様書を出してくれる。間違って欲しくないことは**テストツールではない**こと。フロントエンドとバックエンドで作業者が分かれる場合はあったほうが意思疎通に食い違いが発生しないため用意しておいて損はないだろう。ただし、負担はバックエンドの作業者にのしかかる。
