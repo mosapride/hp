@@ -1,5 +1,5 @@
 ---
-title: Controller - @Query
+title: Controller - @Query Pipe
 description: Queryのベストプラクティスが見つからない。 @Param()は使用しない @Param(キー名)のキー名を明示する number型とstring型のみを使用する number型の場合はParseIntPipeをつける template:@Param('キー', ParseIntPipe) 変数名 number
 ---
 
@@ -21,7 +21,10 @@ async method2(@Query() key1: any) : Promise<any> {
 
 キー指定ありの場合は、`@Query('キー指定' , パイプ)`を指定することにより、初期値や検証などを行うことができる。
 
-キー指定なしの場合は、any型となり、何でも自由に入ってしまい、型の安全性はないや検証はない。安全性を担保するために`@Query() 変数名 : クラス名`を宣言し、class-validationを利用するのだが、別途classを作成する必要があるがパターンが多ければ多いほど面倒であり、class-validationを使用しても不十分な場合がある。
+キー指定なしの場合は、any型となり、何でも自由に入ってしまい、型の安全性はないや検証はない。安全性を担保するために`@Query() 変数名 : クラス名`を宣言し、class-validatorを利用するためにクラスを別ファイルに宣言する。次の章でclass-validatorの使用例を記載する。<br>
+※ファイル名の拡張子を`.dto.ts`にしないと動作しないため(設定で変更が可能)
+
+この章の末尾に記載しているが、Pipeを使った検証、class-validatorを利用した検証ともに、完璧ではないことを宣言しておく。
 
 ## Pipeのみで値を検証する
 
@@ -73,7 +76,7 @@ SwaggerとQueryの書き方を下記に示す。
   </tr>
   <tr>
     <td>string[]</td>
-    <td>@ApiQuery({ name: 'key', isArray: true, required: true })<br>@Query('key', ParseStringPipe, ParseArrayPipe) val: string[]</td>
+    <td>@ApiQuery({ name: 'key', required: true })<br>@Query('key', ParseStringPipe, ParseArrayPipe) val: string[]</td>
     <td>400 ERROR</td>
   </tr>
   <tr>
@@ -106,6 +109,11 @@ SwaggerとQueryの書き方を下記に示す。
   </tr>
   <tr>
     <td colspan="3" style="background-color:#f1f3f4;font-weight:bold;">省略可能</td>
+  </tr>
+  <tr>
+    <td>boolean</td>
+    <td> @ApiQuery({ name: 'key',required: false })<br>@Query('key', ParseBoolPipe) val: boolean</td>
+    <td>false</td>
   </tr>
   <tr>
     <td>string</td>
@@ -162,7 +170,7 @@ SwaggerとQueryの書き方を下記に示す。
 
 ::: tip サンプルコード
 ぐちゃぐちゃだが勘弁して欲しい。非常に面倒だったのだ。<br>
-<https://github.com/mosapride/learn-nestjs/blob/main/src/endpoint/sample-request-query.controller.ts>
+<https://github.com/mosapride/learn-nestjs/blob/main/src/endpoint/sample-request-query-pipe.controller.ts>
 :::
 
 ## Queryの役割と種類について
@@ -202,9 +210,9 @@ Queryは省略が可能な場合、不可能な場合がある。
 
 ### Queryの種類 2. 指定する文字列が決められている場合
 
-TypeScriptのEnumのように、検索する文字列に種別があり、指定する文字列が決められている場合がある。
+検索する文字列に種別があり、指定する文字列が決められている場合がある。
 
-コーディングときに、変数値と値を同じ指定にすれば良い。
+Enum型を宣言し、変数値と値を同じ指定にすれば良い。
 
 ```ts
 enum EnumClass {
@@ -213,6 +221,14 @@ enum EnumClass {
   CCC = 'CCC',
 }
 ```
+
+Enum型を毛嫌いする人もいるが、使い方次第である。公開モジュールのように第三者？が使用するようなライブラリに関してはEnumを控えるべきだが、プロジェクト内で文字列の列挙型として扱う列挙型ならば問題ない。これに関してはO'Reillyの書籍に詳しく説明されている。詳細を記載すると著作権的に問題があるため省略するが良書なので購入を検討するとよい。
+
+::: tip プログラミングTypeScript
+[プログラミングTypeScript ―スケールするJavaScriptアプリケーション開発 - Amazon](https://amzn.to/3Qw7Wai)
+
+3章 型について（P44）に記載されている。
+:::
 
 ### Queryの種類 3. 単体か配列か
 
@@ -224,11 +240,11 @@ Query値が単体か配列かの切り分けも必要になる。
 
 再度注目して欲しいところは**範囲指定の場合は、省略時のデフォルト値が必ず存在する**ところだ。
 
-範囲指定があり、省略時のデフォルト値が不要な仕様があれば教えて欲しい。
+範囲指定があり、省略時のデフォルト値が不要(undefinedやnull)な仕様があれば教えて欲しい。
 
 ## Queryの検証はPipeだけでは終了しない
 
-残念なことに、Queryの検証は各値のチェックだけでは済まされない場合がある。
+**残念なことに、Queryの検証は各値のチェックだけでは済まされない場合がある**。
 
 例として、Youtubeの動画検索パラメータを見てみると良い。
 
