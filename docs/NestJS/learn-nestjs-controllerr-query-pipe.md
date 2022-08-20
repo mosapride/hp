@@ -1,5 +1,5 @@
 ---
-title: Controller - @Query Pipeを使って検証する場合。
+title: Controller - @Query Pipe
 description: Query Pipeを使って検証する場合。 ここの章ではQueryはPipeを使った検証のサンプルを提示する。@Param()は使用しない @Param(キー名)のキー名を明示する number型とstring型のみを使用する number型の場合はParseIntPipeをつける template:@Param('キー', ParseIntPipe) 変数名 number
 ---
 
