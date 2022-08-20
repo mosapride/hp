@@ -33,6 +33,10 @@ description: Paramのベストプラクティスと思われるもの。@Param()
 <https://github.com/mosapride/learn-nestjs/blob/main/src/endpoint/sample-request-param.controller.ts>
 :::
 
+<ClientOnly>
+  <CallInFeedAdsense />
+</ClientOnly>
+
 ## 以下は補足になる
 
 なぜこうしているか、または、アンチパターンを学ぶもの一興。
@@ -106,3 +110,7 @@ URL規則に則っているなら数値っぽくても文字っぽくても良�
 違うエンドポイントと判断されるのが違和感がない。
 
 ![連続したスラッシュは違和感がある](/images/NestJS/multi_slash.png)
+
+<ClientOnly>
+  <CallInFeedAdsense />
+</ClientOnly>

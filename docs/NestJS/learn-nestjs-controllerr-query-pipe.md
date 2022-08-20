@@ -1,9 +1,11 @@
 ---
-title: Controller - @Query Pipe
-description: Queryのベストプラクティスが見つからない。 @Param()は使用しない @Param(キー名)のキー名を明示する number型とstring型のみを使用する number型の場合はParseIntPipeをつける template:@Param('キー', ParseIntPipe) 変数名 number
+title: Controller - @Query Pipeを使って検証する場合。
+description: Query Pipeを使って検証する場合。 ここの章ではQueryはPipeを使った検証のサンプルを提示する。@Param()は使用しない @Param(キー名)のキー名を明示する number型とstring型のみを使用する number型の場合はParseIntPipeをつける template:@Param('キー', ParseIntPipe) 変数名 number
 ---
 
-# @Queryのベストプラクティスが見つからない。
+# @QueryをPipeを使って検証する場合。
+
+ここの章ではQueryはPipeを使った検証のサンプルを提示する。
 
 Queryデータを取得するには`@Query`デコレーターを使用する。使用方法は大雑把に分けると、キー指定したもの、キー指定なしのものに分ける事ができる。
 
@@ -23,6 +25,10 @@ async method2(@Query() key1: any) : Promise<any> {
 
 キー指定なしの場合は、any型となり、何でも自由に入ってしまい、型の安全性はないや検証はない。安全性を担保するために`@Query() 変数名 : クラス名`を宣言し、class-validatorを利用するためにクラスを別ファイルに宣言する。次の章でclass-validatorの使用例を記載する。<br>
 ※ファイル名の拡張子を`.dto.ts`にしないと動作しないため(設定で変更が可能)
+
+<ClientOnly>
+  <CallInFeedAdsense />
+</ClientOnly>
 
 この章の末尾に記載しているが、Pipeを使った検証、class-validatorを利用した検証ともに、完璧ではないことを宣言しておく。
 
@@ -256,3 +262,7 @@ Queryのフィルタとして、**chart、id、myRatingのいづれか１つの�
 
 @see <https://github.com/OAI/OpenAPI-Specification/issues/256>
 
+
+<ClientOnly>
+  <CallInFeedAdsense />
+</ClientOnly>
