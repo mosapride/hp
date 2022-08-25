@@ -221,6 +221,7 @@ module.exports = {
             "server2",
             "oauth",
             "randomPassword",
+            "docker-stable-diffusion"
           ],
         },
       ],
