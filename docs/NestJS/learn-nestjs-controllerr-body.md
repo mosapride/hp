@@ -25,7 +25,7 @@ JSONはkey、valueで表す。valueのTypeは下記の通り。
 </ClientOnly>
 
 
-## 記述方法
+## サンプル
 
 ::: tip code
 <https://github.com/mosapride/learn-nestjs/blob/main/src/endpoint/sample-request-body.dto.ts>
@@ -151,6 +151,16 @@ export class SampleBody {
   };
 }
 ```
+
+## 資料
+
+デコレーターの種類は多い。細かな検証が必要な場合はかなり頑張らないといけない。
+
+* <https://github.com/typestack/class-validator#validation-decorators>
+
+条件により、検証が必要か不要なのかを切り替えることができる。
+
+* <https://github.com/typestack/class-validator#conditional-validation>
 
 <ClientOnly>
   <CallInFeedAdsense />
