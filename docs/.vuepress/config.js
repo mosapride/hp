@@ -193,6 +193,7 @@ module.exports = {
             "learn-nestjs-controllerr-param",
             "learn-nestjs-controllerr-query-pipe",
             "learn-nestjs-controllerr-query-class-validator",
+            "learn-nestjs-controllerr-body"
           ],
         },
       ],
