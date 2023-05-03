@@ -224,7 +224,8 @@ module.exports = {
             "randomPassword",
             "docker-stable-diffusion",
             "keirekisyo",
-            "wsl2vpn"
+            "wsl2vpn",
+            "developerStage"
           ],
         },
       ],
