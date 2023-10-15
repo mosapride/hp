@@ -15,7 +15,7 @@ module.exports = {
    */
   description: description,
 
-  port: 9090,
+  port: 8080,
 
   locales: {
     "/": {
