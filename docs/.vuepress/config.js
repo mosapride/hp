@@ -117,22 +117,6 @@ module.exports = {
       },
     ],
     sidebar: {
-      // '/hako/': [
-      //   {
-      //     title: '箱庭Doc',
-      //     collapsable: false,
-      //     initialOpenGroupIndex: -1,
-      //     sidebarDepth: 0,
-      //     children: [
-      //       '',
-      //       'profile',
-      //       'minecraft',
-      //       'minecraft-term',
-      //       'minecraft-mod',
-      //       'change-skin',
-      //     ],
-      //   },
-      // ],
 
       "/TypeScript/": [
         {
@@ -225,7 +209,8 @@ module.exports = {
             "docker-stable-diffusion",
             "keirekisyo",
             "wsl2vpn",
-            "developerStage"
+            "developerStage",
+            "freelance"
           ],
         },
       ],
